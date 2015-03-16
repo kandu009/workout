@@ -22,7 +22,7 @@ public class MinWindowWithAllCharacters {
 		HashMap<Character, Integer> minFinderMap = new HashMap<Character, Integer>();
 		
 		int minLength = Integer.MAX_VALUE; // minimum window length in which we found all the input characters in the string
-		int tail = 0;	// used to track the lowest index of the character occurence in the string for searching in further string
+		int tail = 0;	// used to track the lowest index of the character occurrence in the string for searching in further string
 		String result = new String();
 		
 		int i = 0;
@@ -46,6 +46,7 @@ public class MinWindowWithAllCharacters {
 					minLength = i-tail+1;
 					result = string.substring(tail, tail+minLength);
 				}
+				++tail;
 			}
 		}
 		
