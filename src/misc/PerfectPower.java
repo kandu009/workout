@@ -1,3 +1,4 @@
+package misc;
 
 /**
  * http://www.careercup.com/question?id=5454925876166656

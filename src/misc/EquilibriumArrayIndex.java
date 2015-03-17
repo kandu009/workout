@@ -1,3 +1,4 @@
+package misc;
 
 /*
  * http://www.geeksforgeeks.org/equilibrium-index-of-an-array/
