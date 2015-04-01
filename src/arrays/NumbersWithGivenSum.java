@@ -1,9 +1,9 @@
-package practise;
+package arrays;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class FindPair {
+public class NumbersWithGivenSum {
 
 	static boolean hasPairWithSum(ArrayList<Integer> arr, int sum) {
 		
