@@ -49,7 +49,7 @@ public class NextLexicogrpahicString {
 		// This can be swapped with the violationIndex character to produce the
 		// next highest string.
 		int swapIndex = -1;
-		for(int i = res.length-2; i > violateIndex; --i) {
+		for(int i = res.length-1; i > violateIndex; --i) {
 			if(res[i] > res[violateIndex]) {
 				swapIndex = i;
 				break;
