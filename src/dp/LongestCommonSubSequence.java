@@ -12,9 +12,9 @@ package dp;
 
 public class LongestCommonSubSequence {
 
+	public static int[][] M;
+	
 	public static int findLongestCommonSequence(String a, String b) {
-		
-		int[][] M = new int[a.length()][b.length()];
 		
 		for(int i = 0; i < a.length(); ++i) {
 			if(a.charAt(i) == b.charAt(0)) {
@@ -52,10 +52,53 @@ public class LongestCommonSubSequence {
 		return M[a.length()-1][b.length()-1];
 	}
 	
+	/**
+	 * The value M[i][j] contains length of LCS. Create a character array
+	 * result[] of length equal to the length of LCS.
+	 * 
+	 * Traverse the 2D array starting from M[m][n]. 
+	 * If characters (in s1 and s2) corresponding to M[i][j] are same, then 
+	 * 	include this character in result.
+	 * Else 
+	 * 	compare values of M[i-1][j] and M[i][j-1] and 
+	 * 	go in direction of greater value.
+	 */
+	public static void printLCS(String s1, String s2, int lengthOfLCS) {
+		
+		char[] result = new char[lengthOfLCS];
+		int index = result.length-1;
+		
+		int i = M.length-1;
+		int j = M[0].length-1;
+		
+		while(i >= 0 && j >= 0 && index >= 0) {
+			if(s1.charAt(i) == s2.charAt(j)) {
+				result[index] = s1.charAt(i);
+				--i;
+				--j;
+				--index;
+			} else if(M[i-1][j] > M[i][j-1]) {
+				--i;
+			} else {
+				--j;
+			}
+		}
+
+		StringBuilder sRes = new StringBuilder();
+		for(int k = 0; k < result.length; ++k) {
+			sRes.append(result[k]);
+		}
+		System.out.println(sRes.toString());
+		
+	}
+	
 	public static void main(String[] args) {
 		String a = "abcdabed";
 		String b = "lkzasdlkjbwedx";
-		System.out.println(findLongestCommonSequence(a, b));
+		M = new int[a.length()][b.length()];
+		int lengthofLCS = findLongestCommonSequence(a, b);
+		System.out.println(lengthofLCS);
+		printLCS(a, b, lengthofLCS);
 	}
 
 }
