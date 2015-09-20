@@ -1,6 +1,7 @@
 package trees;
 
 
+
 /** http://www.careercup.com/question?id=5156120807079936
  * 
  * we should follow an inorder traversal to create a DLL, then link the head and tail
@@ -13,46 +14,119 @@ package trees;
  * 	|											 |
  * 	---------------------------------------------	
  *  
+ *  Solution:
+ *  
+ *  At every recursive level, 
+ *  	create a DLL of the left tree, 
+ *  	create DLL of right tree
+ *  	create links for left <--> root <--> right
+ *  
+ *  Link the leftmost (head) and rightmost (tail) nodes to make it circular DLL.
+ *  
  *  **/
 
 public class BinaryTreeToCircularLinkedList {
 
-	public static TreeNode head, prev = null;
+	public static Node head_, tail_ = null;
 	
-	class TreeNode {
+	public static class Node {
 
-		int m_data;
-		TreeNode m_left;
-		TreeNode m_right;
+		int data_;
+		Node left_;
+		Node right_;
 		
-		public TreeNode(int data) {
-			m_data = data;
-			m_left = m_right = null;
+		public Node(int data) {
+			data_ = data;
+			left_ = right_ = null;
 		}
 		
 	}
 	
-	public static void convertBinaryTreeToCLL(TreeNode root) {
+	public static Node binaryTreeToAscendingCLL(Node root) {
+		
+		binaryTreeToAscendingCLLUtil(root);
+		
+		// link head and  tail.
+		if(head_ != null && tail_ != null) {
+			head_.left_ = tail_;
+			tail_.right_ = head_;
+		}
+		
+		return root;
+	}
+	
+	public static Node binaryTreeToAscendingCLLUtil(Node root) {
+		
 		if(root == null) {
-			return;
+			return null;
 		}
-		convertBinaryTreeToCLL(root.m_left);
-		if(prev == null) {
-			head = root;
-		} else {
-			prev.m_right = root;
-			root.m_left = prev;
+		
+		Node left = null;
+		// recursively create left tree as DLL.
+		if(root.left_ != null) {
+			left = binaryTreeToAscendingCLLUtil(root.left_);
+			for(; left.right_ != null; left = left.right_);
+			left.right_ = root;
+			root.left_ = left;
+			if(head_ == null) {
+				head_ = left;
+			}
 		}
-		prev = root;
-		convertBinaryTreeToCLL(root.m_right);
-		if(prev.m_right == null) {
-			head.m_left = prev;
-			prev.m_right = head;
+
+		// this is to keep a track a right most element.
+		// This should be out of the next if condition. else
+		// while unwinding the recursion tree, we will end up with a wrong right
+		// most node.
+		tail_ = root;
+		Node right = null;
+		// recursively create right tree as DLL.
+		if(root.right_ != null) {
+			right = binaryTreeToAscendingCLLUtil(root.right_);
+			for(; right.left_ != null; right = right.left_);
+			right.left_ = root;
+			root.right_ = right;
 		}
+		
+		return root;
+	}
+	
+	public static void printTree() {
+		
+		Node start = head_;
+		for(; start != tail_; start = start.right_) {
+			System.out.println(start.data_);
+		}
+		System.out.println(tail_.data_);
+		
 	}
 	
 	public static void main(String[] args) {
 
+		Node root1 = new Node(6);
+		Node three1 = new Node(3);
+		Node one1 = new Node(1);
+		Node five1 = new Node(5);
+		Node eight1 = new Node(8);
+		Node seven1 = new Node(7);
+		Node nine1 = new Node(9);
+		Node eleven1 = new Node(11);
+		Node thirteen1 = new Node(13);
+		
+		root1.left_ = three1;
+		three1.left_ = one1;
+		three1.right_ = five1;
+		
+		root1.right_ = eight1;
+		eight1.left_ = seven1;
+		eight1.right_ = eleven1;
+		
+		eleven1.left_ = nine1;
+		eleven1.right_ = thirteen1;
+		
+		binaryTreeToAscendingCLL(root1);
+		
+		printTree();
+		
 	}
 
 }
