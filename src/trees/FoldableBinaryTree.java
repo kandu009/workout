@@ -1,6 +1,5 @@
 package trees;
 
-import trees.RootToLeafPathSumEqualToNumber.Node;
 
 
 /**
