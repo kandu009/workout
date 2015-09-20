@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * http://www.careercup.com/question?id=5762018378252288
  *
  */
-public class TreeToLinkedList {
+public class TreeToInorderLinkedList {
 
 	private static Node DUMMY = new Node(-1);
 	
